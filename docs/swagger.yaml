@@ -1,0 +1,357 @@
+basePath: /
+definitions:
+  dtos.EventRequest:
+    properties:
+      eventId:
+        description: ID of the event to be booked
+        type: string
+      locationType:
+        description: The location information as to will the event will be in-person
+          or virtual
+        type: string
+      providerId:
+        description: ID of the provider for the event
+        type: string
+      userInfo:
+        allOf:
+        - $ref: '#/definitions/dtos.UserInfo'
+        description: Information about the user making the booking
+    type: object
+  dtos.EventResponse:
+    properties:
+      booked:
+        description: Indicates if the event is booked
+        type: boolean
+      date:
+        description: Date of the event
+        type: string
+      duration:
+        description: Duration of the event in minutes
+        type: integer
+      eventId:
+        description: Unique identifier for the event
+        type: string
+      eventType:
+        description: Type of the event
+        type: string
+      facility:
+        description: Facility location where the session will be held
+        type: string
+      location:
+        description: Location of where the session will happen
+        type: string
+      provider:
+        allOf:
+        - $ref: '#/definitions/dtos.ProviderResponse'
+        description: Information about the provider
+      providerId:
+        description: ID of the provider associated with the event
+        type: string
+      slotstart:
+        description: Start time of the event slot
+        type: string
+      summary:
+        description: Summary of the event
+        type: string
+    type: object
+  dtos.InterceptorResponse:
+    properties:
+      data:
+        description: The main data payload of the response, can be of any type
+      errorCode:
+        description: A code representing the specific error type, if applicable
+        type: string
+      errorMessage:
+        description: A message describing the error, if any occurred
+        type: string
+    type: object
+  dtos.Location:
+    properties:
+      facility:
+        description: Name of the facility
+        type: string
+      state:
+        description: State where the provider is located
+        type: string
+    type: object
+  dtos.ProviderRequest:
+    properties:
+      age:
+        description: Age input for filtering providers
+        type: string
+      clinicalFocus:
+        description: List of clinical focus areas
+        items:
+          type: string
+        type: array
+      deliveryMethod:
+        description: Preferred delivery method
+        type: string
+      ethnicity:
+        description: Ethnicity preference for filtering
+        type: string
+      gender:
+        description: Gender preference for filtering
+        type: string
+      language:
+        description: Language preference for filtering
+        type: string
+      location:
+        allOf:
+        - $ref: '#/definitions/dtos.Location'
+        description: Location details for filtering
+      therapeuticModality:
+        description: Preferred therapeutic modality
+        type: string
+    type: object
+  dtos.ProviderResponse:
+    properties:
+      bio:
+        description: Biography of the provider
+        type: string
+      clinicalFocus:
+        description: List of clinical areas the provider focuses on
+        items:
+          type: string
+        type: array
+      ethnicity:
+        description: Ethnicity of the provider
+        type: string
+      events:
+        description: Calendar events for this particular provider
+        items:
+          $ref: '#/definitions/dtos.EventResponse'
+        type: array
+      firstName:
+        description: First name of the provider
+        type: string
+      gender:
+        description: Gender of the provider
+        type: string
+      id:
+        description: Unique identifier for the provider
+        type: string
+      image:
+        description: URL of the provider's image
+        type: string
+      language:
+        description: Language spoken by the provider
+        type: string
+      lastName:
+        description: Last name of the provider
+        type: string
+      location:
+        allOf:
+        - $ref: '#/definitions/dtos.Location'
+        description: Location details of the provider
+      name:
+        description: Full name of the provider
+        type: string
+      profileLink:
+        description: This is a URL which holds the extended bio of the provider
+        type: string
+    type: object
+  dtos.SearchEventRequest:
+    properties:
+      providerId:
+        description: List of provider IDs to search for available slots
+        items:
+          type: string
+        type: array
+    type: object
+  dtos.UserInfo:
+    properties:
+      userName:
+        description: User's name
+        type: string
+    type: object
+  healthCheck.HealthResponse:
+    properties:
+      message:
+        type: string
+      runtime:
+        type: string
+      status:
+        type: integer
+    type: object
+host: func-smh-ss-webapi-stage-003.azurewebsites.net
+info:
+  contact: {}
+  description: This API is used to manage the SOL Smart Scheduling system
+  title: SOL Smart Scheduling API
+  version: "1.0"
+paths:
+  /api/event:
+    get:
+      consumes:
+      - application/json
+      description: This function retrieves event details based on providerId and eventId
+        from the request.
+      parameters:
+      - description: Event ID
+        in: query
+        name: eventId
+        required: true
+        type: string
+      - description: Provider ID
+        in: query
+        name: providerId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Fetch details of single event
+      tags:
+      - Events
+  /api/event/book:
+    post:
+      consumes:
+      - application/json
+      description: BookingEvent handles the HTTP request for booking an event for
+        a healthcare provider based on the provided event details.
+      parameters:
+      - description: Event booking request details
+        in: body
+        name: bookEventBody
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.EventRequest'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Book an Event
+      tags:
+      - Book Event
+  /api/event/list:
+    post:
+      consumes:
+      - application/json
+      description: EventSearch handles the HTTP request for searching available time
+        slots of healthcare providers based on specified filters.
+      parameters:
+      - description: Search filters for available time slots
+        in: body
+        name: searchFilters
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.SearchEventRequest'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Search Events by providerId
+      tags:
+      - Events
+  /api/healthCheck:
+    get:
+      consumes:
+      - application/json
+      description: HealthCheckHandler checks the health of the service and returns
+        the status in JSON format.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Health check successful
+          schema:
+            allOf:
+            - $ref: '#/definitions/dtos.InterceptorResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/healthCheck.HealthResponse'
+              type: object
+      security:
+      - BearerAuth: []
+      summary: Health Check
+      tags:
+      - Health Check
+  /api/provider:
+    post:
+      consumes:
+      - application/json
+      description: ProviderSearch handles the HTTP request for searching healthcare
+        providers based on various filters and returns the results.
+      parameters:
+      - description: Search filters for healthcare providers
+        in: body
+        name: f
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.ProviderRequest'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Search Providers
+      tags:
+      - Providers
+  /api/provider/info:
+    get:
+      consumes:
+      - application/json
+      description: This function retrieves provider details based on providerId and
+        eventId from the request.
+      parameters:
+      - description: Resource ID (Required if providerId is not given)
+        in: query
+        name: resourceId
+        type: string
+      - description: Provider ID (Required if resourceId is not given)
+        in: query
+        name: providerId
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Fetch details of single provider
+      tags:
+      - Providers
+  /api/v2/provider:
+    post:
+      consumes:
+      - application/json
+      description: Fetch providers based on search filters
+      parameters:
+      - description: Provider Request Body
+        in: body
+        name: ProviderRequest
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.ProviderRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully fetched providers and events
+          schema:
+            allOf:
+            - $ref: '#/definitions/dtos.InterceptorResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/dtos.ProviderResponse'
+                  type: array
+              type: object
+      security:
+      - BearerAuth: []
+      summary: Fetch providers attached with events
+      tags:
+      - Providers with Events
+schemes:
+- https
+securityDefinitions:
+  BearerAuth:
+    description: This API requires a Bearer token in the `Authorization` header.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
