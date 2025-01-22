@@ -3,19 +3,20 @@
   <head>
     <meta charset="UTF-8">
     <title>Sol Mental Health Smart Scheduling API Documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../../swagger-ui.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../swagger-ui.css" />
     <link rel="stylesheet" type="text/css" href="index.css" />
-    <link rel="icon" type="image/png" href="../../../favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="../../../favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="../../../../favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="../../../../favicon-16x16.png" sizes="16x16" />
   </head>
 
   <body>
     <div id="swagger-ui"></div>
-    <script src="../../../swagger-ui-bundle.js" charset="UTF-8"> </script>
-    <script src="../../../swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+    <script src="../../../../swagger-ui-bundle.js" charset="UTF-8"> </script>
+    <script src="../../../../swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
     <script>
       window.onload = function() {
-        SwaggerUIBundle({
+        // Initialize Swagger UI with some additional configuration
+        const ui = SwaggerUIBundle({
           url: "./swagger.yaml",
           dom_id: '#swagger-ui',
           deepLinking: true,
@@ -26,7 +27,16 @@
           plugins: [
             SwaggerUIBundle.plugins.DownloadUrl
           ],
-          layout: "StandaloneLayout"
+          layout: "StandaloneLayout",
+          // Add these options for better error handling
+          requestInterceptor: (req) => {
+            console.log('Request:', req);
+            return req;
+          },
+          responseInterceptor: (res) => {
+            console.log('Response:', res);
+            return res;
+          }
         });
       }
     </script>
