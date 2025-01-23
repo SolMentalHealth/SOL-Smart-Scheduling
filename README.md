@@ -9,7 +9,8 @@ The API documentation provides a comprehensive interface for exploring and testi
 ## Documentation Access
 
 The documentation can be accessed at:
-- Current documentation: (⁠https://docs.solmentalhealth.com/api/smart-scheduling/v2/)[⁠https://docs.solmentalhealth.com/api/smart-scheduling/v2/]
+- Current documentation: [Smart Scheduling API v2](https://docs.solmentalhealth.com/api/smart-scheduling/v2/)
+- Current Version: 2.0.0
 
 ## Local Development
 
