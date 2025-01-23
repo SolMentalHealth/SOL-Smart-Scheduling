@@ -9,7 +9,7 @@ The API documentation provides a comprehensive interface for exploring and testi
 ## Documentation Access
 
 The documentation can be accessed at:
-- Main documentation: `/api/smart-scheduling/v2/`
+- Current documentation: (⁠https://docs.solmentalhealth.com/api/smart-scheduling/v2/)[⁠https://docs.solmentalhealth.com/api/smart-scheduling/v2/]
 
 ## Local Development
 
@@ -19,18 +19,9 @@ To run the documentation locally:
 2. Open `docs/index.html` in a web browser
 3. You will be automatically redirected to the API documentation
 
-## Authentication
-
-The API supports OAuth2 authentication with the following flows:
-- Authorization Code
-- Access Token
-
-For secure API access, make sure to follow the OAuth2 authentication flow as specified in the documentation.
-
 ## Technical Details
 
 The documentation is built using:
 - Swagger UI
 - OpenAPI Specification
 - HTML/JavaScript
-- OAuth2 for authentication
