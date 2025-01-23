@@ -1,0 +1,15 @@
+# Set correct MIME types for Swagger UI files
+/docs/*.css
+  Content-Type: text/css
+
+/docs/*.js
+  Content-Type: application/javascript
+
+/docs/*.png
+  Content-Type: image/png
+
+/docs/*.yaml
+  Content-Type: text/yaml
+
+/docs/*.json
+  Content-Type: application/json 

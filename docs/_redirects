@@ -1,0 +1,6 @@
+# Set correct content types
+/docs/*.css   content-type=text/css
+/docs/*.js    content-type=application/javascript
+/docs/*.png   content-type=image/png
+/docs/*.yaml  content-type=text/yaml
+/docs/*.json  content-type=application/json 
