@@ -185,8 +185,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: This function retrieves event details based on providerId and eventId
-        from the request.
+      description: Retrieves event details using providerId and eventId from the request.
       parameters:
       - description: Event ID
         in: query
@@ -203,7 +202,7 @@ paths:
       responses: {}
       security:
       - BearerAuth: []
-      summary: Fetch details of single event
+      summary: Retrieve details of a single event
       tags:
       - Events
   /api/event/book:
